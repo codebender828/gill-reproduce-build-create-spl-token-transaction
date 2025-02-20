@@ -15,12 +15,20 @@ To install the dependencies for this project, run:
 bun install
 ```
 
-## Reproduction
+## Bug Reproduction
 
 To run the bug reproduction:
 
 ```bash
 bun run ./src/commands/create-spl-token/create-spl-token.failed.with-builder.ts --metadataUri=https://arweave.net/-Omj9t4ligrdhloerV618tHv19unECP_9zi9e3Taqyw --url=https://api.devnet.solana.com --keypair=.keypair/signer.json --name="Sonic SVM Test" --symbol=SONIC_Test
+```
+
+## Success Case (Control)
+
+To run the bug reproduction:
+
+```bash
+bun run ./src/commands/create-spl-token/create-spl-token.successful.ts --metadataUri=https://arweave.net/-Omj9t4ligrdhloerV618tHv19unECP_9zi9e3Taqyw --url=https://api.devnet.solana.com --keypair=.keypair/signer.json --name="Sonic SVM Test" --symbol=SONIC_Test
 ```
 
 You may replace the metadata CLI args as you wish.

@@ -4,7 +4,7 @@ import { createConnection } from "../../utils/connection";
 import { createLogger } from "../../utils/logger";
 import { assertFileExists, assertKeyInObject } from "../../utils/assert";
 import { resolve } from "path";
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import {
   address,
   appendTransactionMessageInstructions,
@@ -12,6 +12,7 @@ import {
   generateKeyPairSigner,
   getComputeUnitEstimateForTransactionMessageFactory,
   getSignatureFromTransaction,
+  isAddress,
   pipe,
   setTransactionMessageFeePayerSigner,
   setTransactionMessageLifetimeUsingBlockhash,
@@ -99,14 +100,18 @@ export async function createSPLToken() {
     `Unable to locate keypair file at path ${pathToKeypair}. Aborting.`
   );
 
-  const pathToMintKeypair = resolve(values.mint!);
-  assertFileExists(
-    pathToMintKeypair,
-    `Unable to locate mint address keypair file at path ${pathToMintKeypair}. Aborting.`
-  );
+  if (values.mint) {
+    if (!existsSync(values.mint) && !isAddress(values.mint!))
+      throw new Error(
+        "Invalid mint address provided. Please check the public key string or provide an existing path to the mint address keypair or the public key of the mint address. Aborting..."
+      );
 
-  // if (!isAddress(values.mint!))
-  //   throw new Error("Invalid mint address provided. Aborting...");
+    const pathToMintKeypair = resolve(values.mint!);
+    assertFileExists(
+      pathToMintKeypair,
+      `Unable to locate mint address keypair file at path ${pathToMintKeypair}. Aborting.`
+    );
+  }
 
   logger.info(
     `Creating SPL token mint ${values.mint} with metadata URI: ${metadataUri}`
