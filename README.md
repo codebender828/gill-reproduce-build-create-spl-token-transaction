@@ -1,6 +1,6 @@
-# gill-reproduce-build-create-spl-token-transaction
+# Reproduction for `buildCreateTokenTransaction` bug with `TOKEN_PROGRAM_ADDRESS`.
 
-reproduction for the bug caught when usong the
+reproduction for the bug caught when using the `buildCreateTokenTransaction` function.
 
 ## Example error:
 
